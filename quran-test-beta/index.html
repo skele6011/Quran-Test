@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quran Ayah Picker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Quran Ayah Picker</h1>
+        <div class="controls">
+            <label for="surah-select">Select Surah:</label>
+            <select id="surah-select"></select>
+            <button id="pick-ayah">Pick Ayah</button>
+        </div>
+        <div id="ayah-display" class="hidden">
+            <h2>Selected Ayah:</h2>
+            <p id="ayah-text"></p>
+            <button id="check-answer">Check Answer</button>
+        </div>
+        <div id="answer-display" class="hidden">
+            <h2>Following Ayahs:</h2>
+            <ol id="following-ayahs"></ol>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
