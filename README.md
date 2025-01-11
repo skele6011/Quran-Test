@@ -1,6 +1,8 @@
 # Qur'an Memorization Tester: A Web Application
 [Access it here](quran-test/index.html)
+[Beta Version](quran-test-beta/index.html)
 
+## About
 This web application provides a comprehensive platform for testing and improving Qur'an memorization skills.  Designed for learners of all levels, it offers a variety of features to enhance the memorization process and track progress.
 
 ## Features:
@@ -15,6 +17,8 @@ I am are planning to expand this application by adding more features such as:
 
 ## How can I contribute?
 I'm a solo student programmer, I'm very bad at this (😅). I am looking for contributors who can help me improve the application.  If you have any ideas or suggestions, feel free to reach out to me @ [my email](abdelrahmanebed@gmail.com)
+
+
 
 
 
