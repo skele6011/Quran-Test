@@ -5,9 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quran Ayah Picker</title>
     <link rel="stylesheet" href="style.css">
+    <!-- <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('service-worker.js').then(registration => {
+                    console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                }).catch(err => {
+                    console.error('ServiceWorker registration failed: ', err);
+                });
+            });
+        } else {
+            console.log('Service worker is not supported.');
+        }
+    </script> -->
 </head>
 <body>
     <div class="container">
+        <label class="switch">
+            
+            <span class="slider round"></span>
+        </label>
         <h1>Quran Ayah Picker</h1>
         <div class="controls">
             <label for="surah-select">Select Surah:</label>
@@ -25,5 +42,6 @@
         </div>
     </div>
     <script src="script.js"></script>
+
 </body>
 </html>

@@ -67,3 +67,4 @@ checkAnswerButton.addEventListener('click', () => {
     answerDisplay.classList.remove('hidden');
   }
 });
+
