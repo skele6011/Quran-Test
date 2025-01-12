@@ -1,207 +1,72 @@
-const pickAyahButton = document.getElementById('pick-ayah');
-  // Add event listener to pick ayah button
-  pickAyahButton.addEventListener('click', async () => {
-    const selectedSurahId = parseInt(surahSelect.value);
-    if (selectedSurahId) {
-      try {
-        const response = await fetch(`https://api.alquran.cloud/v1/surah/${selectedSurahId}`);
-        const data = await response.json();
-        selectedSurahAyahs = data.data.ayahs;
-        const randomIndex = Math.floor(Math.random() * selectedSurahAyahs.length);
-        const randomAyah = selectedSurahAyahs[randomIndex];
-        ayahText.textContent = `${randomAyah.numberInSurah}. ${randomAyah.text}`;
-        ayahDisplay.classList.remove('hidden');
-        answerDisplay.classList.add('hidden');
-      } catch (error) {
-        console.error('Error fetching Surah data:', error);
-        ayahText.textContent = 'Failed to load Surah data.';
-        ayahDisplay.classList.remove('hidden');
-      }
-    } else {
-      ayahText.textContent = 'Please select a Surah.';
-      ayahDisplay.classList.remove('hidden');
-    }
-  });
+// script.js
+const quranDataSample = require('./quran.json');
+let currentSurah = null;
 
-// Function to handle range selection
-function handleRangeSelection() {
-  const startSurah = parseInt(startSurahInput.value);
-  const endSurah = parseInt(endSurahInput.value);
-
-  if (isNaN(startSurah) || isNaN(endSurah) || startSurah < 1 || endSurah > 114 || startSurah > endSurah) {
-    alert("Invalid range. Please enter valid Surah numbers (1-114) and ensure start is less than or equal to end.");
-    return;
-  }
-
+// Function to populate the surah select dropdown
+function populateSurahSelect() {
+  const surahSelect = document.getElementById('surah-select');
   surahSelect.innerHTML = ''; // Clear existing options
 
-  for (let i = startSurah; i <= endSurah; i++) {
+  const surahNumbers = Object.keys(quranDataSample); // Get surah numbers
+
+  surahNumbers.forEach(surahNumber => {
     const option = document.createElement('option');
-    option.value = i;
-    option.textContent = `Surah ${i}`;
+    option.value = surahNumber;
+    option.text = `Surah ${surahNumber}`;
     surahSelect.appendChild(option);
-  }
-
-  pickAyahButton.addEventListener('click', async () => {
-    const selectedSurahId = parseInt(surahSelect.value);
-    if (selectedSurahId) {
-      try {
-        const response = await fetch(`https://api.alquran.cloud/v1/surah/${selectedSurahId}`);
-        const data = await response.json();
-        selectedSurahAyahs = data.data.ayahs;
-        const randomIndex = Math.floor(Math.random() * selectedSurahAyahs.length);
-        const randomAyah = selectedSurahAyahs[randomIndex];
-        ayahText.textContent = `${randomAyah.numberInSurah}. ${randomAyah.text}`;
-        ayahDisplay.classList.remove('hidden');
-        answerDisplay.classList.add('hidden');
-      } catch (error) {
-        console.error('Error fetching Surah data:', error);
-        ayahText.textContent = 'Failed to load Surah data.';
-        ayahDisplay.classList.remove('hidden');
-      }
-    } else {
-      ayahText.textContent = 'Please select a Surah.';
-      ayahDisplay.classList.remove('hidden');
-    }
-  });
-}
-// ... (previous code)
-
-// Remove the juz select element
-const juzSelect = document.getElementById('juz-select');
-if (juzSelect) {
-  juzSelect.remove();
-}
-
-// ... (rest of the code)
-const surahSelect = document.getElementById('surah-select');
-const ayahDisplay = document.getElementById('ayah-display');
-const ayahText = document.getElementById('ayah-text');
-const checkAnswerButton = document.getElementById('check-answer');
-const answerDisplay = document.getElementById('answer-display');
-const followingAyahsList = document.getElementById('following-ayahs');
-
-let selectedSurahAyahs = [];
-
-// Function to handle range selection
-function handleRangeSelection() {
-  const startSurah = parseInt(startSurahInput.value);
-  const endSurah = parseInt(endSurahInput.value);
-
-  if (isNaN(startSurah) || isNaN(endSurah) || startSurah < 1 || endSurah > 114 || startSurah > endSurah) {
-    alert("Invalid range. Please enter valid Surah numbers (1-114) and ensure start is less than or equal to end.");
-    return;
-  }
-
-  surahSelect.innerHTML = ''; // Clear existing options
-
-  for (let i = startSurah; i <= endSurah; i++) {
-    const option = document.createElement('option');
-    option.value = i;
-    option.textContent = `Surah ${i}`;
-    surahSelect.appendChild(option);
-  }
-
-  // Add event listener to pick ayah button
-  pickAyahButton.addEventListener('click', () => {
-    const selectedSurahId = parseInt(surahSelect.value);
-    if (selectedSurahId) {
-      const randomIndex = Math.floor(Math.random() * surahSelect.options.length);
-      const randomSurah = surahSelect.options[randomIndex].value;
-      surahSelect.value = randomSurah;
-      // ... (rest of the pickAyahButton logic)
-    }
   });
 }
 
-// Add range selection elements
-const rangeSelectionDiv = document.createElement('div');
-rangeSelectionDiv.classList.add('controls');
-const startSurahLabel = document.createElement('label');
-startSurahLabel.textContent = 'Start Surah:';
-const startSurahInput = document.createElement('input');
-startSurahInput.type = 'number';
-startSurahInput.min = 1;
-startSurahInput.max = 114;
-startSurahInput.id = 'start-surah-input';
-const endSurahLabel = document.createElement('label');
-endSurahLabel.textContent = 'End Surah:';
-const endSurahInput = document.createElement('input');
-endSurahInput.type = 'number';
-endSurahInput.min = 1;
-endSurahInput.max = 114;
-endSurahInput.id = 'end-surah-input';
-const rangeSelectButton = document.createElement('button');
-rangeSelectButton.textContent = 'Select Range';
-rangeSelectButton.addEventListener('click', handleRangeSelection);
+// Function to display the selected ayah
+function displayAyah(surahNumber, ayahNumber) {
+  const ayahText = document.getElementById('ayah-text');
+  const ayahDisplay = document.getElementById('ayah-display');
+  const answerDisplay = document.getElementById('answer-display');
 
-rangeSelectionDiv.appendChild(startSurahLabel);
-rangeSelectionDiv.appendChild(startSurahInput);
-rangeSelectionDiv.appendChild(endSurahLabel);
-rangeSelectionDiv.appendChild(endSurahInput);
-rangeSelectionDiv.appendChild(rangeSelectButton);
-
-const controlsDiv = document.querySelector('.controls');
-controlsDiv.insertBefore(rangeSelectionDiv, surahSelect);
-
-
-surahSelect.addEventListener('change', async () => {
-  const selectedSurahId = parseInt(surahSelect.value);
-  if (selectedSurahId) {
-    try {
-      const response = await fetch(`https://api.alquran.cloud/v1/surah/${selectedSurahId}`);
-      const data = await response.json();
-      selectedSurahAyahs = data.data.ayahs;
-    } catch (error) {
-      console.error('Error fetching Surah data:', error);
-      ayahText.textContent = 'Failed to load Surah data.';
-      ayahDisplay.classList.remove('hidden');
-    }
-  } else {
-    selectedSurahAyahs = [];
-  }
-});
-
-pickAyahButton.addEventListener('click', async () => {
-  const selectedSurahId = parseInt(surahSelect.value);
-  if (selectedSurahId) {
-    try {
-      const response = await fetch(`https://api.alquran.cloud/v1/surah/${selectedSurahId}`);
-      const data = await response.json();
-      selectedSurahAyahs = data.data.ayahs;
-      const randomIndex = Math.floor(Math.random() * selectedSurahAyahs.length);
-      const randomAyah = selectedSurahAyahs[randomIndex];
-      ayahText.textContent = `${randomAyah.numberInSurah}. ${randomAyah.text}`;
-      ayahDisplay.classList.remove('hidden');
-      answerDisplay.classList.add('hidden');
-    } catch (error) {
-      console.error('Error fetching Surah data:', error);
-      ayahText.textContent = 'Failed to load Surah data.';
-      ayahDisplay.classList.remove('hidden');
-    }
-  } else {
-    ayahText.textContent = 'Please select a Surah.';
+  if (quranDataSample[surahNumber] && quranDataSample[surahNumber][ayahNumber - 1]) {
+    ayahText.textContent = quranDataSample[surahNumber][ayahNumber - 1].text;
     ayahDisplay.classList.remove('hidden');
+    answerDisplay.classList.add('hidden');
+  } else {
+    ayahDisplay.classList.add('hidden');
+    answerDisplay.classList.add('hidden');
+    alert('Invalid ayah number.');
   }
-});
-checkAnswerButton.addEventListener('click', () => {
-  const currentAyahNumber = parseInt(ayahText.textContent.split('. ')[0]);
-  followingAyahsList.innerHTML = '';
-  const currentSurahId = parseInt(surahSelect.value);
-  if (currentSurahId) {
-    for (let i = 1; i <= 3; i++) {
-      const nextAyahNumber = currentAyahNumber + i;
-      const nextAyah = selectedSurahAyahs.find(ayah => ayah.numberInSurah === nextAyahNumber);
-      if (nextAyah) {
-        const listItem = document.createElement('li');
-        listItem.textContent = `${nextAyah.numberInSurah}. ${nextAyah.text}`;
-        followingAyahsList.appendChild(listItem);
-      } else {
-        const listItem = document.createElement('li');
-        listItem.textContent = `Ayah ${nextAyahNumber} not found.`;
-        followingAyahsList.appendChild(listItem);
-      }
+}
+
+// Function to display following ayahs
+function displayFollowingAyahs(surahNumber, ayahNumber) {
+  const followingAyahs = document.getElementById('following-ayahs');
+  followingAyahs.innerHTML = '';
+
+  if (quranDataSample[surahNumber]) {
+    for (let i = ayahNumber; i < quranDataSample[surahNumber].length; i++) {
+      const listItem = document.createElement('li');
+      listItem.textContent = quranDataSample[surahNumber][i].text;
+      followingAyahs.appendChild(listItem);
     }
-    answerDisplay.classList.remove('hidden');
+  }
+  const answerDisplay = document.getElementById('answer-display');
+  answerDisplay.classList.remove('hidden');
+}
+
+// Event listeners
+const surahSelect = document.getElementById('surah-select');
+const pickAyahButton = document.getElementById('pick-ayah');
+const checkAnswerButton = document.getElementById('check-answer');
+
+populateSurahSelect();
+
+pickAyahButton.addEventListener('click', () => {
+  const selectedSurah = surahSelect.value;
+  const currentAyah = 1; // Default to first ayah
+
+  displayAyah(selectedSurah, currentAyah);
+  currentSurah = selectedSurah;
+});
+
+checkAnswerButton.addEventListener('click', () => {
+  if (currentSurah) {
+    displayFollowingAyahs(currentSurah, 2);
   }
 });

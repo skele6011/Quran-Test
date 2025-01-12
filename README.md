@@ -14,6 +14,7 @@ I am are planning to expand this application by adding more features such as:
 * A better UI that will make it easier for users to navigate through the application.
 * A tracker that will allow users to see their progress over time and identify areas where they need improvement.
 * A feature that will allow users to share their progress with others, either by sending them a link or by sharing their results on social media.
+* A juz feature as multiple surah is a bit difficult to use.
 
 ## How can I contribute?
 I'm a solo student programmer, I'm very bad at this (😅). I am looking for contributors who can help me improve the application.  If you have any ideas or suggestions, feel free to reach out to me @ [my email](abdelrahmanebed@gmail.com)
