@@ -101,3 +101,6 @@ button:hover {
 .hidden {
     display: none;
 }
+* {
+    line-height: 5vh;
+}
