@@ -1,89 +1,127 @@
-document.addEventListener('DOMContentLoaded', function() {
+// API endpoint for Quran data
+const API_URL = 'https://api.alquran.cloud/v1';
+
+// Wait for DOM to be fully loaded before accessing elements
+document.addEventListener('DOMContentLoaded', () => {
+    // DOM elements
     const surahSelect = document.getElementById('surah-select');
-    const pickAyahButton = document.getElementById('pick-ayah');
+    const pickAyahBtn = document.getElementById('pick-ayah');
     const ayahDisplay = document.getElementById('ayah-display');
+    const ayahNumber = document.getElementById('ayah-number');
     const ayahText = document.getElementById('ayah-text');
-    const checkAnswerButton = document.getElementById('check-answer');
+    const checkAnswerBtn = document.getElementById('check-answer');
     const answerDisplay = document.getElementById('answer-display');
     const followingAyahs = document.getElementById('following-ayahs');
 
-    let currentSurah;
-    let currentAyahIndex;
-    let quranData; // Declare this at the top
+    // Verify all elements are found
+    const elements = {
+        surahSelect,
+        pickAyahBtn,
+        ayahDisplay,
+        ayahNumber,
+        ayahText,
+        checkAnswerBtn,
+        answerDisplay,
+        followingAyahs
+    };
 
-    // Load the JSON file - make sure the path is correct
-    fetch('quran.json')  // Simplified path
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log('Data loaded successfully');
-            // Log the structure to debug
-            console.log('Data structure:', data);
-            quranData = data.data || data; // Try both data.data and data
-            initializeApp();
-        })
-        .catch(error => {
-            console.error('Error loading quran.json:', error);
-            ayahText.textContent = 'Error loading Quran data. Please refresh or try again later.';
-        });
+    // Check if any element is null
+    for (const [name, element] of Object.entries(elements)) {
+        if (!element) {
+            console.error(`Element not found: ${name}`);
+        }
+    }
 
-    function initializeApp() {
-        console.log('Initializing with data:', quranData);
-        
-        if (!quranData || typeof quranData !== 'object') {
-            console.error('Invalid Quran data structure:', quranData);
+    // State variables
+    let currentSurah = null;
+    let currentAyah = null;
+    let surahData = null;
+
+    // Initialize the app
+    async function init() {
+        try {
+            // Fetch list of surahs
+            const response = await fetch(`${API_URL}/surah`);
+            const data = await response.json();
+            
+            // Populate surah select
+            data.data.forEach(surah => {
+                const option = document.createElement('option');
+                option.value = surah.number;
+                option.textContent = `${surah.number}. ${surah.name} (${surah.englishName})`;
+                surahSelect.appendChild(option);
+            });
+        } catch (error) {
+            console.error('Error loading surahs:', error);
+        }
+    }
+
+    // Pick random ayah from selected surah
+    async function pickRandomAyah() {
+        const selectedSurahNumber = surahSelect.value;
+        if (!selectedSurahNumber) {
+            alert('Please select a surah first');
             return;
         }
 
-        // Convert the object structure to array format
-        const surahs = Object.entries(quranData).map(([number, ayahs]) => ({
-            number: parseInt(number),
-            ayahs: ayahs.map((ayah, index) => ({
-                number: index + 1,
-                text: ayah.text || ayah
-            }))
-        }));
-
-        // Sort surahs by number
-        surahs.sort((a, b) => a.number - b.number);
-
-        // Populate surah select
-        surahs.forEach(surah => {
-            const option = document.createElement('option');
-            option.value = surah.number;
-            option.textContent = `${surah.number}. ${surah.name || `Surah ${surah.number}`}`;
-            surahSelect.appendChild(option);
-        });
-
-        pickAyahButton.addEventListener('click', () => {
-            const selectedSurahNumber = parseInt(surahSelect.value);
-            currentSurah = surahs.find(surah => surah.number === selectedSurahNumber);
-            
-            // Pick random ayah (excluding last 3 ayahs)
-            const maxAyahIndex = currentSurah.ayahs.length - 3;
-            currentAyahIndex = Math.floor(Math.random() * maxAyahIndex);
-            
-            ayahText.textContent = currentSurah.ayahs[currentAyahIndex].text;
-            ayahDisplay.classList.remove('hidden');
+        try {
+            // Show loading state
+            ayahDisplay.classList.add('hidden');
             answerDisplay.classList.add('hidden');
-        });
 
-        checkAnswerButton.addEventListener('click', () => {
-            followingAyahs.innerHTML = '';
-            
-            // Display next 3 ayahs
-            for(let i = 1; i <= 3; i++) {
-                const nextAyah = currentSurah.ayahs[currentAyahIndex + i];
-                const li = document.createElement('li');
-                li.textContent = nextAyah.text;
-                followingAyahs.appendChild(li);
+            // Fetch surah data if not already loaded or if different surah selected
+            if (!surahData || currentSurah !== selectedSurahNumber) {
+                const response = await fetch(`${API_URL}/surah/${selectedSurahNumber}/ar.alafasy`);
+                const data = await response.json();
+                
+                console.log('API Response:', data); // Debug log
+                
+                if (!data.data || !data.data.ayahs) {
+                    throw new Error('Invalid API response structure');
+                }
+                
+                surahData = data.data;
+                currentSurah = selectedSurahNumber;
             }
-            
-            answerDisplay.classList.remove('hidden');
-        });
+
+            // Additional validation
+            if (!Array.isArray(surahData.ayahs)) {
+                throw new Error('Ayahs data is not in expected format');
+            }
+
+            // Pick random ayah (excluding last 3 ayahs)
+            const maxAyah = Math.max(1, surahData.numberOfAyahs - 3);
+            const randomIndex = Math.floor(Math.random() * maxAyah);
+            currentAyah = randomIndex;
+
+            // Display selected ayah
+            ayahNumber.textContent = currentAyah + 1;
+            ayahText.textContent = surahData.ayahs[currentAyah].text;
+            ayahDisplay.classList.remove('hidden');
+        } catch (error) {
+            console.error('Error picking ayah:', error);
+            alert('Failed to load ayah. Please try again.');
+        }
     }
+
+    // Show following ayahs as answer
+    function showAnswer() {
+        followingAyahs.innerHTML = '';
+        
+        // Display next three ayahs
+        for (let i = currentAyah; i < currentAyah + 3 && i < surahData.numberOfAyahs; i++) {
+            const li = document.createElement('li');
+            li.textContent = surahData.ayahs[i].text;
+            followingAyahs.appendChild(li);
+        }
+        
+        answerDisplay.classList.remove('hidden');
+    }
+
+    // Event listeners
+    pickAyahBtn.addEventListener('click', pickRandomAyah);
+    checkAnswerBtn.addEventListener('click', showAnswer);
+
+    // Initialize the app
+    init();
 });
