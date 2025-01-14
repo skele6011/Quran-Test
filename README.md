@@ -1,6 +1,6 @@
 # Qur'an Memorization Tester: A Web Application
 [Access it here](quran-test/index.html)  
-[Beta Version](quran-test-beta/index.html)
+[Beta Version](quran-test-beta/index.html)  
 [Offline download](quran-test/offline/offline-quran-test/index.html)
 
 ## About
