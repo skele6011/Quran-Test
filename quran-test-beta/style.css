@@ -7,77 +7,51 @@ body {
     background-color: #212529;
     color: #fff;
     margin: 0;
-    /* Added responsive styles */
-    width: 100%;
-    overflow-x: hidden;
-    
 }
 
 .container {
-    max-width: 90%;
+    max-width: 800px;
     width: 800px;
-    background-color: #343a40;
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    margin: 20px auto;
-    /* Added responsive styles */
-    
-    
-    
-}
-
-@media (max-width: 768px) {
-    .container {
-        width: 90%;
-    }
-}
-body {
-    font-family: 'Arial', sans-serif; /* Changed font */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background-color: #212529; /* Dark background */
-    color: #fff; /* Light text color */
-    margin: 0;
-}
-
-#ayah-text {
-    font-family: 'Times New Roman', serif; /* Arabic font */
-    font-size: 1.2em; /* Increased font size */
-    color: #ffffff; /* Dark text color */
-}
-
-.container {
-    background-color: black; /* Light container */
-    padding: 30px;
+    background-color: black;
+    padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
     text-align: center;
+    margin: 0 auto;
+    font-family: Arial, sans-serif;
+}
+
+#ayah-text {
+    font-family: 'Times New Roman', serif;
+    font-size: 24px;
+    color: #ffffff;
+    text-align: right;
+    direction: rtl;
+    line-height: 1.6;
+    margin: 20px 0;
 }
 
 h1 {
     margin-bottom: 20px;
-    color: #ffffff; /* Dark text color */
+    color: #ffffff;
 }
 
 .controls {
-    margin-bottom: 20px;
+    margin: 20px 0;
 }
 
 label {
     margin-right: 10px;
-    color: #ffffff; /* Dark text color */
+    color: #ffffff;
 }
 
 select, button {
-    padding: 8px 12px;
+    padding: 8px;
     border-radius: 4px;
-    border: 1px solid black; /* Gray border */
+    border: 1px solid black;
     cursor: pointer;
-    color: #333; /* Dark text color */
+    color: #333;
+    margin: 5px;
 }
 
 button {
@@ -93,14 +67,24 @@ button:hover {
 #ayah-display, #answer-display {
     margin-top: 20px;
     padding: 15px;
-    border: 1px solid black; /* Gray border */
+    border: 1px solid black;
     border-radius: 4px;
-    background-color: black; /* Light background for ayah display */
+    background-color: black;
 }
 
 .hidden {
     display: none;
 }
-* {
-    line-height: 5vh;
+
+@media (max-width: 768px) {
+    .container {
+        width: 90%;
+    }
+}
+
+#following-ayahs li {
+    font-size: 20px;
+    text-align: right;
+    direction: rtl;
+    margin: 10px 0;
 }
