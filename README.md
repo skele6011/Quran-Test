@@ -1,7 +1,5 @@
 # Qur'an Memorization Tester: A Web Application
-[Access it here](quran-test/index.html)  
-[Beta Version](quran-test-beta/index.html)  
-[Offline download](quran-test/offline/index.html)
+[Access it here](https://skele6011.github.io/quranic-light/quranic-light-intro.html)
 
 ## About
 This web application provides a comprehensive platform for testing and improving Qur'an memorization skills.  Designed for learners of all levels, it offers a variety of features to enhance the memorization process and track progress.
@@ -18,11 +16,12 @@ I am are planning to expand this application by adding more features such as:
 * A juz feature as multiple surah is a bit difficult to use.
 
 ## How can I contribute?
-I'm a solo student programmer, I'm very bad at this (😅). I am looking for contributors who can help me improve the application.  If you have any ideas or suggestions, feel free to reach out to me @ [my email](abdelrahmanebed@gmail.com)
-
-
-
-
+I'm a solo student programmer, I'm very bad at this (😅). I am looking for contributors who can help me improve the application.  If you have any ideas or suggestions, feel free to reach out to me @ [my email](abdelrahmanebed@gmail.com)  
+  
+  
+[I'd suggest not using this. Use the main app on the top]  
+[Offline download](quran-test/offline/index.html)  
+[Beta Version](quran-test-beta/index.html)   
 
 
 
