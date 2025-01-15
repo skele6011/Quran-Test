@@ -14,10 +14,10 @@ body {
 }
 
 .container {
-    max-width: 90%;
-    width: 800px;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
     background-color: #343a40;
-    padding: 30px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     text-align: center;
@@ -48,6 +48,10 @@ body {
     font-family: 'Times New Roman', serif; /* Arabic font */
     font-size: 1.2em; /* Increased font size */
     color: #ffffff; /* Dark text color */
+    text-align: right;
+    direction: rtl;
+    display: block;
+    margin: 10px 0;
 }
 
 .container {
@@ -64,7 +68,7 @@ h1 {
 }
 
 .controls {
-    margin-bottom: 20px;
+    margin: 20px 0;
 }
 
 label {
@@ -91,16 +95,47 @@ button:hover {
 }
 
 #ayah-display, #answer-display {
-    margin-top: 20px;
-    padding: 15px;
-    border: 1px solid black; /* Gray border */
-    border-radius: 4px;
+    margin: 20px 0;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
     background-color: black; /* Light background for ayah display */
 }
 
 .hidden {
     display: none;
 }
+
+.active {
+    background-color: #4CAF50;
+    color: white;
+}
+
 * {
     line-height: 5vh;
+}
+
+.controls label, .controls select, .controls input {
+    margin: 5px;
+}
+
+#following-ayahs {
+    text-align: right;
+    direction: rtl;
+    padding: 10px;
+}
+
+.surah-range {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.surah-range > div {
+    flex: 1;
+}
+
+#single-controls.hidden,
+#multi-controls.hidden {
+    display: none;
 }

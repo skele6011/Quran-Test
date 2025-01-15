@@ -10,8 +10,29 @@
     <div class="container">
         <h1>Qur'an Memorization Test</h1>
         <div class="controls">
-            <label for="surah-select">Select Surah:</label>
-            <select id="surah-select"></select>
+            <label for="mode-select">Test Mode:</label>
+            <select id="mode-select">
+                <option value="single">Single Surah</option>
+                <option value="multiple">Multiple Surahs</option>
+            </select>
+            <div id="multi-controls" class="hidden">
+                <label for="ayah-count">Number of Ayahs:</label>
+                <input type="number" id="ayah-count" min="2" max="10" value="3">
+                <div class="surah-range">
+                    <div>
+                        <label for="surah-select-start">From Surah:</label>
+                        <select id="surah-select-start"></select>
+                    </div>
+                    <div>
+                        <label for="surah-select-end">To Surah:</label>
+                        <select id="surah-select-end"></select>
+                    </div>
+                </div>
+            </div>
+            <div id="single-controls">
+                <label for="surah-select">Select Surah:</label>
+                <select id="surah-select"></select>
+            </div>
             <button id="pick-ayah">Pick Ayah</button>
         </div>
         <div id="ayah-display" class="hidden">
