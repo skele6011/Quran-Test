@@ -5,45 +5,66 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Qur'an Memorization Test</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container">
-        <h1>Qur'an Memorization Test</h1>
-        <div class="controls">
-            <label for="mode-select">Test Mode:</label>
-            <select id="mode-select">
-                <option value="single">Single Surah</option>
-                <option value="multiple">Multiple Surahs</option>
-            </select>
-            <div id="multi-controls" class="hidden">
-                <label for="ayah-count">Number of Ayahs:</label>
-                <input type="number" id="ayah-count" min="2" max="10" value="3">
-                <div class="surah-range">
-                    <div>
-                        <label for="surah-select-start">From Surah:</label>
-                        <select id="surah-select-start"></select>
+        <header>
+            <h1>Qur'an Memorization Test</h1>
+        </header>
+        <main>
+            <div class="card controls">
+                <div class="mode-selector">
+                    <label for="mode-select">Test Mode:</label>
+                    <select id="mode-select" class="select-styled">
+                        <option value="single">Single Surah</option>
+                        <option value="multiple">Advanced mode (Multiple Surahs)</option>
+                    </select>
+                </div>
+
+                <div id="multi-controls" class="hidden control-group">
+                    <div class="input-group">
+                        <label for="ayah-count">Number of Ayahs:</label>
+                        <input type="number" id="ayah-count" min="2" max="10" value="3" class="input-styled">
                     </div>
-                    <div>
-                        <label for="surah-select-end">To Surah:</label>
-                        <select id="surah-select-end"></select>
+                    <div class="surah-range">
+                        <div class="input-group">
+                            <label for="surah-select-start">From Surah:</label>
+                            <select id="surah-select-start" class="select-styled"></select>
+                        </div>
+                        <div class="input-group">
+                            <label for="surah-select-end">To Surah:</label>
+                            <select id="surah-select-end" class="select-styled"></select>
+                        </div>
                     </div>
                 </div>
+
+                <div id="single-controls" class="control-group">
+                    <div class="input-group">
+                        <label for="surah-select">Select Surah:</label>
+                        <select id="surah-select" class="select-styled"></select>
+                    </div>
+                </div>
+
+                <button id="pick-ayah" class="btn-primary">Pick Ayah</button>
             </div>
-            <div id="single-controls">
-                <label for="surah-select">Select Surah:</label>
-                <select id="surah-select"></select>
+
+            <div id="ayah-display" class="card hidden">
+                <h2>Selected Ayah</h2>
+                <p class="ayah-content">
+                    <span id="ayah-number" class="ayah-number"></span>
+                    <span id="ayah-text" class="arabic-text"></span>
+                </p>
+                <button id="check-answer" class="btn-primary">Check Answer</button>
             </div>
-            <button id="pick-ayah">Pick Ayah</button>
-        </div>
-        <div id="ayah-display" class="hidden">
-            <h2>Selected Ayah:</h2>
-            <p><span id="ayah-number"></span>. <span id="ayah-text"></span></p>
-            <button id="check-answer">Check Answer</button>
-        </div>
-        <div id="answer-display" class="hidden">
-            <h2>Following Ayahs:</h2>
-            <ol id="following-ayahs"></ol>
-        </div>
+
+            <div id="answer-display" class="card hidden">
+                <h2>Following Ayahs</h2>
+                <ol id="following-ayahs" class="arabic-text"></ol>
+            </div>
+        </main>
     </div>
     <script src="script.js"></script>
 </body>
